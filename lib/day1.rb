@@ -19,7 +19,7 @@ class Day1
     (norths - souths).abs + (wests - easts).abs
   end
 
-  def sequences(sequence)
+  def self.sequences(sequence)
     sequence.split(', ').map { |item| {turn: item[0], blocks: item[1..-1].to_i } }
   end
 
