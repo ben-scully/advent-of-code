@@ -2,56 +2,50 @@
 
 class Day1
   NORTH = 'north'
-  EAST = 'east'
+  EAST  = 'east'
   SOUTH = 'south'
-  WEST = 'west'
+  WEST  = 'west'
 
   def self.blocks_away(sequence)
-    seqs = sequences(sequence)
-
-    dirs_and_blks = directions_and_blocks(NORTH, seqs, [])
-
-    norths  = blocks_per_direction(NORTH, dirs_and_blks)
-    easts   = blocks_per_direction(EAST,  dirs_and_blks)
-    souths  = blocks_per_direction(SOUTH, dirs_and_blks)
-    wests   = blocks_per_direction(WEST,  dirs_and_blks)
-
-    (norths - souths).abs + (wests - easts).abs
+    sequences = sequences(sequence)
+    compass = { NORTH => 0, EAST => 0, SOUTH => 0, WEST => 0 }
+    directions_and_blocks(NORTH, sequences, compass)
   end
 
   def self.sequences(sequence)
     sequence.split(', ').map { |item| {turn: item[0], blocks: item[1..-1].to_i } }
   end
 
-  def self.directions_and_blocks(previous_facing, sequence, new_sequence)
-    return new_sequence if sequence.empty?
+  def self.directions_and_blocks(prev_facing, sequences, compass)
+    return number_blocks(compass) if sequences.empty?
 
-    next_dir = sequence.shift
+    next_dir = sequences.shift
 
-    now_facing = direction_after_turn(previous_facing, next_dir[:turn] == 'R')
-    new_sequence.push({direction: now_facing, blocks: next_dir[:blocks]})
+    now_facing = dir_after_turn(prev_facing, next_dir[:turn] == 'R')
 
-    directions_and_blocks(now_facing, sequence, new_sequence)
+    update_compass(now_facing, next_dir[:blocks], compass)
+
+    directions_and_blocks(now_facing, sequences, compass)
   end
 
-  def self.direction_after_turn(direction, turn_clockwise)
-    case direction
+  def self.dir_after_turn(dir_before_turn, turn_clockwise)
+    case dir_before_turn
     when NORTH
         turn_clockwise ? EAST : WEST
     when EAST
         turn_clockwise ? SOUTH : NORTH
     when SOUTH
         turn_clockwise ? WEST : EAST
-    when WEST
-        turn_clockwise ? NORTH : SOUTH
     else
-      raise 'Invalid direction given'
+        turn_clockwise ? NORTH : SOUTH
     end
   end
 
-  def self.blocks_per_direction(direction, directions_and_blocks)
-    directions_and_blocks
-      .select { |item| item[:direction] == direction }
-      .sum    { |item| item[:blocks] }
+  def self.update_compass(dir, blks, compass)
+    compass[dir] = compass[dir] + blks
+  end
+
+  def self.number_blocks(compass)
+    (compass[NORTH]-compass[SOUTH]).abs + (compass[WEST]-compass[EAST]).abs
   end
 end
