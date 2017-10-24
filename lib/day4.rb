@@ -1,19 +1,20 @@
 # lib/day4.rb
 
 class Day4
-  def self.sector_id_sum(sector_ids)
-
+  def self.characters(sector_id)
+    sector_id.split('-')[0..-2].join.chars
   end
 
-  def self.sector_id(sector_id)
-
+  def self.sorted_character_frequency(chars)
+    chars.each_with_object(Hash.new(0)){|key,hash| hash[key] += 1}
+         .sort_by {|key, value| value}.to_h
   end
 
-  def self.valid_sector_id?(sector_id)
-
+  def self.checksum(sector_id)
+    sector_id.split('-').pop().split('[').pop[0..-2]
   end
 
-  def self.character_count(sector_id)
-    sector_id.split('-')
+  def self.value(sector_id)
+    sector_id.split('-').pop().split('[').shift.to_i
   end
 end

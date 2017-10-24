@@ -3,115 +3,124 @@
 require 'day4'
 
 describe Day4 do
+  let(:sector_id_1) { 'aaaaa-bbb-z-y-x-123[abxyz]' }
+  let(:sector_id_2) { 'a-b-c-d-e-f-g-h-987[abcde]' }
+  let(:sector_id_3) { 'not-a-real-room-404[oarel]' }
+  let(:sector_id_4) { 'totally-real-room-200[decoy]' }
+
   subject(:day) { described_class }
 
-  # describe '#valid_sector_id?' do
-  #   context 'when valid' do
-  #     let(:sector_id) { 'aaaaa-bbb-z-y-x-123[abxyz]' }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.valid_sector_id?(sector_id)).to be true
-  #     end
-  #   end
-  #
-  #   context 'when valid' do
-  #     let(:sector_id) { 'a-b-c-d-e-f-g-h-987[abcde]' }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.valid_sector_id?(sector_id)).to be true
-  #     end
-  #   end
-  #
-  #   context 'when valid' do
-  #     let(:sector_id) { 'not-a-real-room-404[oarel]' }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.valid_sector_id?(sector_id)).to be true
-  #     end
-  #   end
-  #
-  #   context 'when invalid' do
-  #     let(:sector_id) { 'totally-real-room-200[decoy]' }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.valid_sector_id?(sector_id)).to be false
-  #     end
-  #   end
-  # end
+  describe '#characters' do
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_1 }
+      let(:result) { ['a','a','a','a','a','b','b','b','z','y','x'] }
 
-  describe '#character_count' do
-    context 'when valid' do
-      let(:sector_id) { 'aaaaa-bbb-z-y-x-123[abxyz]' }
-      let(:result) { [] }
-
-      it 'returns character_count' do
-        expect(day.character_count(sector_id)).to eql(result)
+      it 'returns characters' do
+        expect(day.characters(sector_id)).to eql(result)
       end
     end
 
-    context 'when valid' do
-      let(:sector_id) { 'a-b-c-d-e-f-g-h-987[abcde]' }
-      let(:result) { [] }
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_2 }
+      let(:result) { ['a','b','c','d','e','f','g','h'] }
 
-      it 'returns character_count' do
-        expect(day.character_count(sector_id)).to eql(result)
+      it 'returns characters' do
+        expect(day.characters(sector_id)).to eql(result)
       end
     end
 
-    context 'when valid' do
-      let(:sector_id) { 'not-a-real-room-404[oarel]' }
-      let(:result) { [] }
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_3 }
+      let(:result) { ['n','o','t','a','r','e','a','l','r','o','o','m'] }
 
-      it 'returns character_count' do
-        expect(day.character_count(sector_id)).to eql(result)
+      it 'returns characters' do
+        expect(day.characters(sector_id)).to eql(result)
       end
     end
 
-    context 'when invalid' do
-      let(:sector_id) { 'totally-real-room-200[decoy]' }
-      let(:result) { [] }
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_4 }
+      let(:result) { ['t','o','t','a','l','l','y','r','e','a','l','r','o','o','m'] }
 
-      it 'returns character_count' do
-        expect(day.character_count(sector_id)).to eql(result)
+      it 'returns characters' do
+        expect(day.characters(sector_id)).to eql(result)
       end
     end
   end
 
-  # describe '#sector_id' do
-  #   context 'when valid' do
-  #     let(:sector_id) { 'aaaaa-bbb-z-y-x-123[abxyz]' }
-  #     let(:result) { 123 }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.sector_id(sector_id)).to eql(result)
-  #     end
-  #   end
-  #
-  #   context 'when valid' do
-  #     let(:sector_id) { 'a-b-c-d-e-f-g-h-987[abcde]' }
-  #     let(:result) { 987 }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.sector_id(sector_id)).to eql(result)
-  #     end
-  #   end
-  #
-  #   context 'when valid' do
-  #     let(:sector_id) { 'not-a-real-room-404[oarel]' }
-  #     let(:result) { 404 }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.sector_id(sector_id)).to eql(result)
-  #     end
-  #   end
-  #
-  #   context 'when invalid' do
-  #     let(:sector_id) { 'totally-real-room-200[decoy]' }
-  #     let(:result) { 200 }
-  #
-  #     it 'returns valid?' do
-  #       expect(day.sector_id(sector_id)).to eql(result)
-  #     end
-  #   end
-  # end
+  describe '#checksum' do
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_1 }
+      let(:result) { 'abxyz' }
+
+      it 'returns checksum' do
+        expect(day.checksum(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_2 }
+      let(:result) { 'abcde' }
+
+      it 'returns checksum' do
+        expect(day.checksum(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_3 }
+      let(:result) { 'oarel' }
+
+      it 'returns checksum' do
+        expect(day.checksum(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_4 }
+      let(:result) { 'decoy' }
+
+      it 'returns checksum' do
+        expect(day.checksum(sector_id)).to eql(result)
+      end
+    end
+  end
+
+  describe '#value' do
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_1 }
+      let(:result) { 123 }
+
+      it 'returns value' do
+        expect(day.value(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_2 }
+      let(:result) { 987 }
+
+      it 'returns value' do
+        expect(day.value(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_3 }
+      let(:result) { 404 }
+
+      it 'returns value' do
+        expect(day.value(sector_id)).to eql(result)
+      end
+    end
+
+    context 'when given complete sectorid' do
+      let(:sector_id) { sector_id_4 }
+      let(:result) { 200 }
+
+      it 'returns value' do
+        expect(day.value(sector_id)).to eql(result)
+      end
+    end
+  end
 end
